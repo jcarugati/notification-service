@@ -19,6 +19,11 @@ func (nh *NotificationHandler) Handle(c *gin.Context) {
 		return
 	}
 
+	if err := checkRequest(request); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
 	if err := nh.service.SendNotification(request.UserID, request.Message, request.Type); err != nil {
 		status, body := handlerError(err)
 		c.JSON(status, body)
@@ -43,6 +48,22 @@ func handlerError(err error) (int, gin.H) {
 	}
 
 	return http.StatusInternalServerError, gin.H{"error": "internal server error"}
+}
+
+func checkRequest(request NotificationRequest) error {
+	if request.UserID == "" {
+		return errors.New("user id is required")
+	}
+
+	if request.Message == "" {
+		return errors.New("message is required")
+	}
+
+	if request.Type == "" {
+		return errors.New("type is required")
+	}
+
+	return nil
 }
 
 // NewNotificationHandler initializes a new NotificationHandler.
