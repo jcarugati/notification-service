@@ -7,7 +7,6 @@ import (
 )
 
 func TestNotificationService_SendNotification(t *testing.T) {
-
 	t.Run("should send notification", func(t *testing.T) {
 		service := makeService()
 		err := service.SendNotification("user_id", "message", "test1")
