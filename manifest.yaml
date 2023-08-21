@@ -3,9 +3,12 @@ rules:
   - name: Status
     type: status
     ttl: 2m
+    max_attempts: 2
   - name: News
     type: news
     ttl: 24h
+    max_attempts: 1
   - name: Marketing
     type: marketing
-    ttl: 3h
+    ttl: 1h
+    max_attempts: 3

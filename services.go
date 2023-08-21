@@ -16,7 +16,8 @@ var (
 
 // Rule represents a rate limiting rule with a specified TTL.
 type Rule struct {
-	TTL time.Duration
+	TTL         time.Duration
+	MaxAttempts int
 }
 
 // Rules is a map that represents a collection of rules indexed by their type.
@@ -42,7 +43,7 @@ func (ns *notificationService) SendNotification(userID, message, notificationTyp
 	key := createKey(userID, notificationType)
 
 	// Check if request is allowed based on the key and TTL.
-	if !ns.Limiter.Allow(key, rule.TTL) {
+	if !ns.Limiter.Allow(key, rule) {
 		return ErrRateLimitExceeded
 	}
 
@@ -79,7 +80,7 @@ func NewNotificationService(limiter RateLimiter, gateway Gateway, manifest *Mani
 			panic(err)
 		}
 
-		rules[rule.Type] = &Rule{TTL: ttl}
+		rules[rule.Type] = &Rule{TTL: ttl, MaxAttempts: rule.MaxAttempts}
 	}
 
 	return &notificationService{Limiter: limiter, Gateway: gateway, Rules: rules}

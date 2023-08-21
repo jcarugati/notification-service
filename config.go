@@ -13,9 +13,10 @@ type Manifest struct {
 }
 
 type Values struct {
-	Name string `yaml:"name"`
-	Type string `yaml:"type"`
-	TTL  string `yaml:"ttl"`
+	Name        string `yaml:"name"`
+	Type        string `yaml:"type"`
+	TTL         string `yaml:"ttl"`
+	MaxAttempts int    `yaml:"max_attempts"`
 }
 
 func LoadFile(path string) (*Manifest, error) {

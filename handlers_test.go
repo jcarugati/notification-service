@@ -88,9 +88,10 @@ func makeHandler() *NotificationHandler {
 		Version: 0,
 		Rules: []Values{
 			{
-				Name: "TestRule",
-				Type: "test1",
-				TTL:  "1s",
+				Name:        "TestRule",
+				Type:        "test1",
+				TTL:         "1s",
+				MaxAttempts: 1,
 			},
 		},
 	}
