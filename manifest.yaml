@@ -1,0 +1,11 @@
+version: 1
+rules:
+  - name: Status
+    type: status
+    ttl: 2m
+  - name: News
+    type: news
+    ttl: 24h
+  - name: Marketing
+    type: marketing
+    ttl: 3h
